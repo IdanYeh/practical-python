@@ -27,23 +27,25 @@ def portfolio_cost(filename):
 
 
 # Commands
-filename = 'Data/missing.csv'
+if __name__ == '__main__':
 
-total_c = portfolio_cost(filename)
+    filename = 'Data/missing.csv'
+
+    total_c = portfolio_cost(filename)
 
 
-if len(sys.argv) == 2:
-    filename = sys.argv[1]
-else:
-    filename = 'Data/portfolio.csv'
+    if len(sys.argv) == 2:
+        filename = sys.argv[1]
+    else:
+        filename = 'Data/portfolio.csv'
 
-# total_cost = portfolio_cost('Data/portfolio.csv')
-# print('Total cost', total_cost)
+    # total_cost = portfolio_cost('Data/portfolio.csv')
+    # print('Total cost', total_cost)
 
-total_c = portfolio_cost(filename)
-print('Total cost', total_c)
+    total_c = portfolio_cost(filename)
+    print('Total cost', total_c)
 
-filename = 'Data/portfoliodate.csv'
+    filename = 'Data/portfoliodate.csv'
 
-total_c = portfolio_cost(filename)
-print('Total cost', total_c)
+    total_c = portfolio_cost(filename)
+    print('Total cost', total_c)
