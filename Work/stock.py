@@ -1,24 +1,16 @@
 # stock.py
+from Work.typedproperty import String, Integer, Float
+
 
 class Stock:
-    '''
-    An instance of a stock holding consisting of name, shares, and price.
-    '''
-    __slots__ = ('name', '_shares', 'price')
+    name = String('name')
+    shares = Integer('shares')
+    price = Float('price')
+
     def __init__(self, name, shares, price):
         self.name = name
         self.shares = shares
         self.price = price
-
-    @property
-    def shares(self):
-        return self._shares
-
-    @shares.setter
-    def shares(self, value):
-        if not isinstance(value, int):
-            raise TypeError('Expected int')
-        self._shares = value
 
     def __repr__(self) -> str:
         return f"Stock({self.name}, {self.price}, {self.shares})"

@@ -12,15 +12,14 @@ from Work.stock import Stock
 from Work.portfolio import Portfolio
 
 # functions
-def read_portfolio(filename):
+def read_portfolio(filename, **opts):
+    '''
+    Read a stock portfolio file into a list of dictionaries with keys
+    name, shares, and price.
+    '''
     with open(filename) as lines:
-        portdicts = fileparse.parse_csv(lines,
-                                        select=['name','shares','price'],
-                                        types=[str,int,float])
-
-    portfolio = [Stock(name=d['name'], shares=d['shares'], price=d['price']) for d in portdicts ]
-    return Portfolio(portfolio)
-
+        port = Portfolio.from_csv(lines)
+    return port
 def read_prices(filename):
     '''
     Read a CSV file of price data into a dict mapping names to prices.
@@ -66,7 +65,7 @@ def portfolio_report(portfoliofile, pricefile, fmt='txt'):
     Make a stock report given portfolio and price data files.
     '''
     # Read data files
-    portfolio = read_portfolio(portfoliofile)
+    portfolio = read_portfolio(portfoliofile, silence_errors=True)
     prices = read_prices(pricefile)
 
     # Create the report data
@@ -87,7 +86,7 @@ if __name__ == '__main__':
     wp.portfolio_cost(portfolio_filename)
     curr_report = portfolio_report(portfolio_filename, prices_filename)
     bla = 1
-    portfolio = read_portfolio(os.path.join(folder_path, 'portfolio.csv'))
+    portfolio = read_portfolio(os.path.join(folder_path, 'portfolio.csv'),  silence_errors=True)
     from Work.tableformat import create_formatter, print_table
 
     formatter = create_formatter('txt')
