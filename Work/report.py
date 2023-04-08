@@ -9,6 +9,7 @@ import Work.pcost as wp
 import Work.tableformat as tableformat
 import Work.fileparse as fileparse
 from Work.stock import Stock
+from Work.portfolio import Portfolio
 
 # functions
 def read_portfolio(filename):
@@ -18,25 +19,14 @@ def read_portfolio(filename):
                                         types=[str,int,float])
 
     portfolio = [Stock(name=d['name'], shares=d['shares'], price=d['price']) for d in portdicts ]
-    return portfolio
+    return Portfolio(portfolio)
 
 def read_prices(filename):
-    stocks_dict = {}
-    with open(filename, 'rt') as f:
-        rows = csv.reader(f)
-        # header = next(rows)
-        # print(header)
-        for data in rows:
-            # data = line.replace('\n', '').split(',')
-            # print(data)
-            if len(data) < 1:
-                continue
-            try:
-                stocks_dict[data[0]] = float(data[1])
-            except ValueError:
-                print('the following data line: ', data, ' is not compatible.\nline were skipped.')
-    return stocks_dict
-
+    '''
+    Read a CSV file of price data into a dict mapping names to prices.
+    '''
+    with open(filename) as lines:
+        return dict(fileparse.parse_csv(lines, types=[str,float], has_headers=False))
 
 def gain_loss(portfolio, prices):
     gainloss = {}
